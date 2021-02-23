@@ -20,21 +20,26 @@ export class AppComponent {
   kolom = 0;
   validitas = "";
   hasil = "";
+  countTurn = 0;
 
   ChangeTurn() {
     if (this.hasil != "") {
       this.validitas = "Maaf, game sudah selesai!";
     } else {
       var turn = Number(this.user) % 2;
-      console.log(turn);
       var valid = this.CheckValid();
       if (valid == 1) {
         this.validitas = "";
-        this.board[this.baris-1][this.kolom-1] = turn.toString();
+        this.board[this.baris - 1][this.kolom - 1] = turn.toString();
 
         var res = this.CheckWin();
+        this.countTurn++;
         if (res == 0) {
-          this.ChangeUser();
+          if (this.countTurn >= this.board.length * this.board.length) {
+            this.hasil = "Gamenya Draw!";
+          } else {
+            this.ChangeUser();
+          }
         } else {
           this.hasil = "Selamat, User " + this.user + " menang";
         }
@@ -46,14 +51,16 @@ export class AppComponent {
 
   CheckValid() {
     if (
-      (this.baris >= 5 && this.baris < 1) ||
-      (this.kolom >= 5 && this.kolom < 1)
+      this.baris > 5 ||
+      this.baris < 1 ||
+      (this.kolom > 5 || this.kolom < 1)
     ) {
       return 0;
     }
+
     if (
-      this.board[this.baris-1][this.kolom-1] == "0" ||
-      this.board[this.baris-1][this.kolom-1] == "1"
+      this.board[this.baris - 1][this.kolom - 1] == "0" ||
+      this.board[this.baris - 1][this.kolom - 1] == "1"
     ) {
       return 0;
     }
