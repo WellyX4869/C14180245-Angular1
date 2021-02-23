@@ -22,38 +22,39 @@ export class AppComponent {
   hasil = "";
 
   ChangeTurn() {
-    var turn = Number(this.user) % 2;
-    console.log(turn);
-    var valid = this.CheckValid();
-    if (valid == 1) {
-      this.validitas = "";
-      this.board[this.baris][this.kolom] = turn.toString();
-
-      var res = this.CheckWin();
-      if (res == 0) {
-        this.ChangeUser();
-      }
-      else{
-        this.hasil = "Selamat, User "+this.user+" menang";
-      }
+    if (this.hasil != "") {
+      this.validitas = "Maaf, game sudah selesai!";
     } else {
-      this.validitas = "*Baris atau kolom tidak valid ATAU sudah terisi";
+      var turn = Number(this.user) % 2;
+      console.log(turn);
+      var valid = this.CheckValid();
+      if (valid == 1) {
+        this.validitas = "";
+        this.board[this.baris-1][this.kolom-1] = turn.toString();
+
+        var res = this.CheckWin();
+        if (res == 0) {
+          this.ChangeUser();
+        } else {
+          this.hasil = "Selamat, User " + this.user + " menang";
+        }
+      } else {
+        this.validitas = "Baris atau kolom tidak valid ATAU sudah terisi";
+      }
     }
   }
 
   CheckValid() {
     if (
-      (this.baris >= 5 && this.baris < 0) ||
-      (this.kolom >= 5 && this.kolom < 0)
+      (this.baris >= 5 && this.baris < 1) ||
+      (this.kolom >= 5 && this.kolom < 1)
     ) {
-      console.log("jancok1");
       return 0;
     }
     if (
-      this.board[this.baris][this.kolom] == "0" ||
-      this.board[this.baris][this.kolom] == "1"
+      this.board[this.baris-1][this.kolom-1] == "0" ||
+      this.board[this.baris-1][this.kolom-1] == "1"
     ) {
-      console.log("jancok2");
       return 0;
     }
     return 1;
@@ -66,7 +67,7 @@ export class AppComponent {
       if (
         this.board[i][0] == this.board[i][1] &&
         this.board[i][1] == this.board[i][2] &&
-        this.board[i][2] == this.board[i][3] && 
+        this.board[i][2] == this.board[i][3] &&
         this.board[i][0] != "*"
       ) {
         return 1;
@@ -86,7 +87,7 @@ export class AppComponent {
       if (
         this.board[0][i] == this.board[1][i] &&
         this.board[1][i] == this.board[2][i] &&
-        this.board[2][i] == this.board[3][i] && 
+        this.board[2][i] == this.board[3][i] &&
         this.board[0][i] != "*"
       ) {
         return 1;
