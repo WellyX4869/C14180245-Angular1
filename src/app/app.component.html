@@ -1,4 +1,19 @@
 <hello name="{{ name }}"></hello>
 <p>
-  Start editing to see some magic happen :)
+  Board Awal
 </p>
+<div *ngFor="let baris of board;">
+  <span *ngFor="let item of baris;">
+    {{item}}
+  </span>
+  <br>
+</div>
+
+<p>User {{user}} (baris, kolom): </p>
+<p style="color:red">{{validitas}}</p>
+<input type="text" [(ngModel)]="baris"/>,
+<input type="text" [(ngModel)]="kolom"/>
+<br>
+<button (click)="ChangeTurn()">Input</button>
+
+<p>{{hasil}}</p>
